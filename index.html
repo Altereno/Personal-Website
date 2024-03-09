@@ -55,9 +55,14 @@
         <div class="px-4 py-5 my-5 text-center">
             <h1 class="display-1 fw-bold text-body-emphasis">Hello</h1>
             <div class="col-lg-6 mx-auto">
-                <p class="lead mb-4">-Steven</p>
+                <br>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3" href="assets/StevenChen.pdf">Resume</a>
+                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3"
+                        href="assets/StevenChen.pdf">Resume</a>
+                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3"
+                        href="https://github.com/Altereno">GitHub</a>
+                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3"
+                        href="https://www.linkedin.com/in/sc0-steven-chen/">LinkedIn</a>
                 </div>
             </div>
         </div>
@@ -77,8 +82,7 @@
                 </h5>
                 <h5>
                     I try to document everything I work on for future troubleshooting
-                    and installations, you can see my documentation in the projects
-                    section.
+                    and installations, you can see my documentation and side projects below.
                 </h5>
                 <br /><br />
             </div>
@@ -89,7 +93,7 @@
                     <li class="list-group-item">TrueNAS Core & Scale</li>
                     <li class="list-group-item">PfSense</li>
                     <li class="list-group-item">TP-Link Omada SDN</li>
-                    <li class="list-group-item">MikroTik 10GBe</li>
+                    <li class="list-group-item">MikroTik Switches</li>
                 </ul>
                 <br /><br />
             </div>
@@ -98,8 +102,21 @@
 
     <div id="Projects" class="container min-vh-100">
         <div class="container px-4 py-5" id="custom-cards">
-            <h2 class="pb-2 border-bottom">Documentation & Personal Projects (WIP)</h2>
+            <h2 class="pb-2 border-bottom">Documentation & Personal Projects</h2>
             <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="https://github.com/jayupad/My-Journal-Buddy">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Journal Buddy
+                            </h3>
+                            <p>
+                                Journaling app with AI integration, part of Texas Luminescence.
+                            </p>
+                        </div>
+                    </a>
+                </div>
                 <div class="col">
                     <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
                         style="text-decoration: none" href="/writeups/portainer_installation.html">
@@ -107,6 +124,10 @@
                             <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
                                 Portainer Installation
                             </h3>
+                            <p>
+                                Installation of Portainer, a Docker container management software, on a Ubuntu VM with
+                                iSCSI connections for persistent volumes.
+                            </p>
                         </div>
                     </a>
                 </div>
@@ -117,25 +138,34 @@
                             <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
                                 Jellyfin Installation
                             </h3>
+                            <p>
+                                Installation of Jellyfin, a software media system, on a Ubuntu LXC container with GPU
+                                passthrough for hardware transcoding.
+                            </p>
                         </div>
                     </a>
                 </div>
                 <div class="col">
                     <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
-                        style="text-decoration: none" href="">
+                        style="text-decoration: none" href="/writeups/nut_installation.html">
                         <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
                             <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
                                 NUT Installation
                             </h3>
+                            <p>
+                                Installation of Network UPS Tools, for sharing UPS information to devices on the same
+                                network.
+                            </p>
                         </div>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 </body>
 
