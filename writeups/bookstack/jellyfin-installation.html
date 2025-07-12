@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html class="dark-mode" lang="en-GB">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="bookstack.css" />
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <title>Jellyfin Installation</title>
+  <meta http-equiv="Content-Security-Policy"
+    content="frame-src &#039;self&#039; https://*.draw.io https://*.youtube.com https://*.youtube-nocookie.com https://*.vimeo.com https://embed.diagrams.net; script-src http: https: &#039;nonce-IsssxByQdJuKttAoGHgdYv0A&#039; &#039;strict-dynamic&#039;; object-src &#039;self&#039;; base-uri &#039;self&#039;" />
+</head>
+
+<body class="export export-format-html export-engine-none">
+  <div class="page-content">
+    <h1 style="font-size: 4.8em">Jellyfin Installation on LXC</h1>
+    <p>
+      Installation of Jellyfin, an open source media library alternative to
+      Plex. Includes instructions on allowing the container to access the
+      Nvidia card for transcoding.
+    </p>
+
+    <ul class="contents">
+      <li>
+        <a href="#page-6">Base Installation</a>
+      </li>
+      <li>
+        <a href="#page-8">Adding Media</a>
+      </li>
+      <li>
+        <a href="#page-7">Proxmox LXC + Nvidia Transcoding</a>
+      </li>
+      <li>
+        <a href="#page-13">Tweaks + Notes</a>
+      </li>
+    </ul>
+
+    <div class="page-break"></div>
+
+    <h1 id="page-6">Base Installation</h1>
+    <p id="bkmrk-create-a-new-privile">
+      Create a new privileged container with the Ubuntu 22.04 template.
+    </p>
+    <p id="bkmrk-run%C2%A0apt-update-%26%26-ap">
+      Run
+      <code>apt update &amp;&amp; apt upgrade -y</code>
+      to update the repositories and install updates.
+    </p>
+    <p id="bkmrk-manual-installation-">
+      Manual installation instructions of Jellyfin can be found on the
+      <a href="https://jellyfin.org/docs/general/installation/linux#ubuntu" target="_blank" rel="noopener">Official
+        Jellyfin Docs</a><br />
+    </p>
+    <p id="bkmrk-i-just-used-their-sc">
+      I just used their script:
+      <code>curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash</code>
+    </p>
+    <p id="bkmrk-after-the-script-com">
+      After the script completes, Jellyfin should be accessible from
+      http://&lt;Jellyfin-ip&gt;:8096
+    </p>
+    <p id="bkmrk-if-it-is-not-accessi">
+      If it is not accessible try to enable and start Jellyfin automatically
+      with systemd:
+    </p>
+    <p id="bkmrk-sudo-systemctl-enabl">
+      <code>sudo systemctl enable jellyfin &amp;&amp; sudo systemctl start
+          jellyfin</code>
+    </p>
+    <div class="page-break"></div>
+
+    <h1 id="page-8">Adding Media</h1>
+    <p id="bkmrk-since-i-have-a-truen">
+      Since I have a TrueNAS system that stores all my data, it would make
+      sense to have Jellyfin access all my content remotely. I used Samba
+      instead of NFS because I had not looked into NFS permissions when I
+      first set this up.
+    </p>
+    <p id="bkmrk-most-of-this-is-base">
+      Most of this is based on Ubuntu's documentation on
+      <a href="https://wiki.ubuntu.com/MountWindowsSharesPermanently" target="_blank" rel="noopener">mounting windows
+        shares</a>.
+    </p>
+    <p id="bkmrk-install-cifs-utils-w">
+      Install CIFS utils with
+      <code>sudo apt install cifs-utils</code>
+    </p>
+    <p id="bkmrk-create-a-mount-point">
+      Create a mount point for the share with
+      <code>sudo mkdir /mnt/jellyfin</code>
+    </p>
+    <h5 id="bkmrk-without-password">Without Password</h5>
+    <p id="bkmrk-if-the-share-has-gue">
+      If the share has guest access enabled, then just add the following to
+      fstab with
+      <code>sudo nano /etc/fstab</code>
+    </p>
+    <pre
+      id="bkmrk-%2F%2Fpeanut%2Fmedia%2Fjelly"><code class="language-">//Peanut/Media/Jellyfin    /mnt/Jellyfin    cifs    guest,uid=1000,iocharset=utf8    0    0</code></pre>
+    <p id="bkmrk-mount-with-mount-%2Fmn">
+      Mount with
+      <code>mount /mnt/Jellyfin</code>
+    </p>
+    <h5 id="bkmrk-with-password">With Password</h5>
+    <p id="bkmrk-if-the-share-has-use">
+      If the share has User Authentication, create a credentials file with
+      <code>nano ~/.creds</code>
+    </p>
+    <p id="bkmrk-add-the-following-to">
+      Add the following to the file and change the permissions to the file
+      with
+      <code>chmod 600 ~/.creds</code>
+    </p>
+    <pre id="bkmrk-username%3D%24username-p"><code class="language-">username=$USERNAME
+password=$PASSWORD</code></pre>
+    <p id="bkmrk-add-the-following-to-1">
+      Add the following to fstab with
+      <code>sudo nano /etc/fstab</code>
+    </p>
+    <pre
+      id="bkmrk-%2F%2Fpeanut%2Fmedia%2Fjelly-1"><code class="language-">//Peanut/Media/Jellyfin    /mnt/Jellyfin    cifs    credentials=/.creds,iocharset=utf8    0    0</code></pre>
+    <p id="bkmrk-mount-with-mount-%2Fmn-1">
+      Mount with
+      <code>mount /mnt/Jellyfin</code>
+    </p>
+    <p id="bkmrk-%C2%A0"></p>
+    <div class="page-break"></div>
+
+    <h1 id="page-7">Proxmox LXC + Nvidia Transcoding</h1>
+    <p id="bkmrk-i-wanted-to-have-the">
+      I wanted to have the ability to use the transcoder on my Quadro M2000
+      while keeping it as my servers display out. I had to give the container
+      permission to use the video device on the hypervisor. Make sure that
+      your saved media formats are supported by the Nvidia card you have or
+      want to get by referencing
+      <a href="https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new" target="_blank"
+        rel="noopener">this</a>.
+    </p>
+    <p id="bkmrk-my-installation-of-p">
+      My installation of Proxmox is on a ZFS Raid1, therefore utilizing the
+      systemd-boot instead of GRUB. More detailed instruction can be found on
+      the
+      <a href="https://pve.proxmox.com/wiki/PCI_Passthrough" target="_blank" rel="noopener">Official Proxmox Docs</a>.
+    </p>
+    <h4 id="bkmrk-enabling-iommu">Enabling IOMMU</h4>
+    <p id="bkmrk-look-through-the-bio">
+      Look through the BIOS of your machine and enable IOMMU.
+    </p>
+    <p id="bkmrk-edit-the-bootloader-">
+      Edit the bootloader kernel config file with
+      <code>nano /etc/kernel/cmdline</code>
+    </p>
+    <p id="bkmrk-append%C2%A0quiet%2C-amd_io">
+      Append <code>quiet</code>, <code>amd_iommu=on</code>, and
+      <code>iommu=pt</code>
+      to the end of the line
+    </p>
+    <p class="callout info" id="bkmrk-the-options-in-the-c">
+      The options in the config file are separated by spaces.
+    </p>
+    <p class="callout warning" id="bkmrk-the-current-cpu-in-m">
+      The current CPU in my machine is a Ryzen 7 2700x, Intel based chips will
+      have a different setup, refer to the PVE docs.
+    </p>
+    <p id="bkmrk-save-and-exit-from-t">
+      Save and exit from the text editor and run
+      <code>proxmox-boot-tool refresh</code>
+    </p>
+    <p id="bkmrk-reboot-and-verify-by">
+      Reboot and verify by running
+      <code>dmesg | grep - e DMAR -e IOMMU</code>
+    </p>
+    <p id="bkmrk-it-should-say-that-i">It should say that IOMMU is enabled</p>
+    <pre id="bkmrk-%5B-%C2%A0-%C2%A00.583711%5D-pci-0"><code class="language-">[    0.583711] pci 0000:00:00.2: AMD-Vi: IOMMU performance counters supported
+[    0.584425] pci 0000:00:00.2: AMD-Vi: Found IOMMU cap 0x40
+[    0.584558] perf/amd_iommu: Detected AMD IOMMU #0 (2 banks, 4 counters/bank).</code></pre>
+    <p id="bkmrk-add-the-following-li">
+      Add the following lines to <code>/etc/modules</code><br />
+    </p>
+    <pre id="bkmrk-vfio-vfio_iommu_type"><code class="language-">vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd</code></pre>
+    <h4 id="bkmrk-install-drivers-on-h">Install Drivers on Host</h4>
+    <p id="bkmrk-we-first-need-to-bla">
+      We first need to blacklist the nouveau kernel drivers by running:
+    </p>
+    <p id="bkmrk-echo--e-%22blacklist-n">
+      <code>echo -e "blacklist nouveau\noptions nouveau modeset=0" &gt;
+          /etc/modprobe.d/blacklist-nouveau.conf</code>
+    </p>
+    <p id="bkmrk-then-run-update-init">
+      Then run
+      <code>update-initramfs -u</code>
+      and reboot<br />
+    </p>
+    <p id="bkmrk-run-apt-install-pve-">
+      Run
+      <code>apt install pve-headers-$(uname -r)</code>
+      to install the headers
+    </p>
+    <p id="bkmrk-download-the-latest-">
+      Download the latest Nvidia Drivers for your card and platform
+    </p>
+    <p id="bkmrk-wget-https%3A%2F%2Fus.down">
+      <code>wget
+          https://us.download.nvidia.com/XFree86/Linux-x86_64/525.116.04/NVIDIA-Linux-x86_64-525.116.04.run</code><br />
+    </p>
+    <p id="bkmrk-install-make-and-gcc">
+      install make and gcc with
+      <code>apt install make gcc</code>
+    </p>
+    <p id="bkmrk-make-the-download-fi">
+      Make the download file an executable
+      <code>chmod +x NVIDIA-Linux-x86_64-510.47.03.run</code>
+    </p>
+    <p id="bkmrk-run-the-script-with%C2%A0">
+      Run the script with
+      <code>./NVIDIA-Linux-x86_64-510.47.03.run</code>
+    </p>
+    <p class="callout info" id="bkmrk-answer-%22no%22-when-it-">
+      Answer "no" when it asks if you want to install 32bit compatibility
+      drivers<br />Answer "no" when it asks if it should update X config<br />
+    </p>
+    <p id="bkmrk-append-the-following">
+      Append the following to <code>/etc/modules-load.d/modules.conf</code>:
+      <br />
+    </p>
+    <pre id="bkmrk-nvidia-nvidia_uvm"><code class="language-">nvidia
+nvidia_uvm</code></pre>
+    <p id="bkmrk-run-update-initramfs">
+      Run
+      <code>update-initramfs -u -k all</code>
+    </p>
+    <p id="bkmrk-add-the-following-li-1">
+      Add the following lines to
+      <code>/etc/udev/rules.d/70-nvidia.rules</code>:<br />
+    </p>
+    <pre
+      id="bkmrk-kernel%3D%3D%22nvidia%22%2C-ru"><code class="language-">KERNEL=="nvidia", RUN+="/bin/bash -c '/usr/bin/nvidia-smi -L &amp;&amp; /bin/chmod 666 /dev/nvidia*'"
+KERNEL=="nvidia_uvm", RUN+="/bin/bash -c '/usr/bin/nvidia-modprobe -c0 -u &amp;&amp; /bin/chmod 0666 /dev/nvidia-uvm*'"</code></pre>
+    <p class="callout info" id="bkmrk-verify-the-host-inst">
+      Verify the host installation by running: nvidia-smi
+    </p>
+    <h4 id="bkmrk-container-installati">Container Installation</h4>
+    <p id="bkmrk-add-these-lines-to%C2%A0%2F">
+      Add these lines to
+      <code>/etc/pve/lxc/&lt;id&gt;.conf</code>
+    </p>
+    <pre id="bkmrk-lxc.cgroup2.devices."><code class="language-">lxc.cgroup2.devices.allow: c 195:* rwm
+lxc.cgroup2.devices.allow: c 509:* rwm</code></pre>
+    <p class="callout info" id="bkmrk-use-ls--l-%2Fdev%2Fnvidi">
+      Use ls -l /dev/nvidia* to see the ids and match them in the cgroup2
+      lines
+    </p>
+    <p id="bkmrk-pass-through-the-dev">
+      Pass through the device files by appending the following to
+      <code>/etc/pve/lxc/&lt;id&gt;.conf</code><br />
+    </p>
+    <pre id="bkmrk-lxc.mount.entry%3A-%2Fde"><code class="language-">lxc.mount.entry: /dev/nvidia0 dev/nvidia0 none bind,optional,create=file
+lxc.mount.entry: /dev/nvidiactl dev/nvidiactl none bind,optional,create=file
+lxc.mount.entry: /dev/nvidia-uvm dev/nvidia-uvm none bind,optional,create=file
+lxc.mount.entry: /dev/nvidia-uvm-tools dev/nvidia-uvm-tools none bind,optional,create=file</code></pre>
+    <p id="bkmrk-wget-the-same-nvidia">
+      Wget the same Nvidia driver earlier on the container
+    </p>
+    <p id="bkmrk-run-the-script-with-">
+      Run the script with this argument:
+      <code>./NVIDIA-Linux-x86_64-510.47.03.run --no-kernel-module arg</code><br />
+    </p>
+    <p class="callout warning" id="bkmrk-make-sure-that-the-d">
+      Make sure that the driver on the container is exactly the same as the
+      driver on the host.
+    </p>
+    <p class="callout info" id="bkmrk-verify-the-container">
+      Verify the container installation by running: nvidia-smi
+    </p>
+    <h4 id="bkmrk-enable-hardware-acce">
+      Enable Hardware Acceleration on Jellyfin
+    </h4>
+    <p id="bkmrk-navigate-to-the-jell">Navigate to the Jellyfin Web UI</p>
+    <p id="bkmrk-under-administration">
+      Under Administration -&gt; Dashboard -&gt; Playback:
+    </p>
+    <p id="bkmrk-change-the-%22hardware">
+      Change the "Hardware acceleration" option to Nvidia NVENC
+    </p>
+    <p id="bkmrk-refer-to-the-nvidia-">
+      Refer to the
+      <a href="https://developer.nvidia.com/video-encode-and-decode-gpu-support-matrix-new" target="_blank"
+        rel="noopener">Nvidia GPU Encode and Decode Matrix</a>
+      to find the support file format for your card.
+    </p>
+    <p id="bkmrk-check-all-of-the-box">
+      Check all of the boxes under "Enable hardware decoding for" to match the
+      Nvidia reference sheet.
+    </p>
+    <p id="bkmrk-verify-by-playing-me">
+      Verify by playing media that requires transcoding on the Web UI.
+    </p>
+    <div class="page-break"></div>
+
+    <h1 id="page-13">Tweaks + Notes</h1>
+    <h4 id="bkmrk-power-states">Power States</h4>
+    <p id="bkmrk-when-running%C2%A0nvidia-">
+      When running <code>nvidia-smi</code>, I noticed that the GPU was idling
+      in the maximum performance power state: P0. To address this issue, I had
+      to run the <code>nvidia-persistenced</code>, command to have the GPU
+      change power states when needed. The command won't survive a reboot so I
+      had to make a service for it.<br />
+    </p>
+    <p id="bkmrk-create-a-new-script-">
+      Create a new script in
+      <code>/etc/init.d</code>
+      with
+      <code>nano /etc/init.d/fixQuadroPower</code><br />
+    </p>
+    <p id="bkmrk-add-the-following-to">Add the following to the file:</p>
+    <pre id="bkmrk-%23%21%2Fbin%2Fbash-nvidia-p"><code class="language-bash">#!/bin/bash
+nvidia-persistenced</code></pre>
+    <p id="bkmrk-save-and-exit">Save and exit</p>
+    <p id="bkmrk-make-the-file-execut">
+      Make the file executable with
+      <code>chmod +x /etc/init.d/fixQuadroPower</code>
+    </p>
+    <p id="bkmrk-add-the-following-li">
+      Add the following line to
+      <code>/etc/crontab</code>
+    </p>
+    <pre
+      id="bkmrk-%40reboot-root-%2Fbin%2Fba"><code class="language-bash"> @reboot    root    /bin/bash    /etc/init.d/fixQuadroPower &gt; /dev/null 2&gt;&amp;1</code></pre>
+    <p id="bkmrk-check-the-results-wi">
+      Check the results with <code>nvidia-smi</code>, the power state should
+      be in idle P8 and the power draw should be noticeably lower.
+    </p>
+  </div>
+</body>
+
+</html>

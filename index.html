@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Steven Chen</title>
+    <link rel="icon" type="image/png" href="/images/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous" />
+    <style>
+        html {
+            font-family: "Roboto", sans-serif;
+        }
+
+        .container {
+            padding-top: 60px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand">Steven Chen</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Home">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#About">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/writeups/quartz/">Projects (New)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Projects">Projects (Old)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="mailto:sc0.steven.chen@gmail.com">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="Home" class="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="px-4 py-5 my-5 text-center">
+            <h1 class="display-1 fw-bold text-body-emphasis">Hello</h1>
+            <div class="col-lg-6 mx-auto">
+                <br />
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3"
+                        href="assets/StevenChen_2024.pdf">Resume</a>
+                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3"
+                        href="https://github.com/Altereno">GitHub</a>
+                    <a type="button" class="btn btn-outline-secondary btn-lg px-4 gap-3"
+                        href="https://www.linkedin.com/in/sc0-steven-chen/">LinkedIn</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="About" class="container min-vh-100 overflow-hidden d-flex align-items-center justify-content-center">
+        <div class="row gx-5">
+            <div class="col-md">
+                <h1>About Me</h1>
+                <h5>
+                    I'm currently pursuing a Bachelor's degree in Electrical and Computer Engineering at The University
+                    of Texas at Austin.
+                </h5>
+                <h5>
+                    I'm particularly interested in networking, self-hosting, and infrastructure automation. To support
+                    my learning, I built a homelab environment where I test and explore various technologies hands-on.
+                </h5>
+                <h5>
+                    I document everything I work on to make troubleshooting and future setups easier. You can find my
+                    documentation and side projects below.
+                </h5>
+
+                <br /><br />
+            </div>
+            <div class="col-md">
+                <h1>Current Homelab</h1>
+                <h5>
+                    I'm using Proxmox VE as the hypervisor for all my virtualized services. For storage, I use TrueNAS
+                    Scale, taking advantage of ZFS for snapshots and backups.
+                </h5>
+                <h5>
+                    Networking is handled with pfSense as the firewall/router, along with a combination of TP-Link and
+                    MikroTik devices for switching and routing.
+                </h5>
+                <h5>
+                    Most of my self-hosted services are deployed using Docker Compose, with data stored on NFS volumes.
+                    Services are reverse proxied internally for access.
+                </h5>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+
+    <div id="Projects" class="container min-vh-100">
+        <div class="container px-4 py-5" id="custom-cards">
+            <h2 class="pb-2 border-bottom">Documentation & Personal Projects</h2>
+            <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5">
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/quartz/">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                New Writeups Here
+                            </h3>
+                            <p>
+                                All the new writeups are now written in Markdown using Obsidian and rendered with
+                                Quartz.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/bookstack/kubernetes-the-hard-way.html">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Kubernetes The Hard Way
+                            </h3>
+                            <p>
+                                My experience through Kelsey Hightower's Kubernetes The Hard
+                                Way lab. Adapted for AMD64 machines. Added some basic IaC with
+                                Terraform on Proxmox. Wrote some steps in Ansible for
+                                practice.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/bookstack/pterodactyl-panel-installation.html">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Pterodactyl Panel Installation
+                            </h3>
+                            <p>
+                                Installation of the game server management platform,
+                                Pterodactyl. Installed locally using internal DNS and reverse
+                                proxy.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="https://github.com/jayupad/My-Journal-Buddy">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Journal Buddy
+                            </h3>
+                            <p>
+                                Journaling app with AI integration, part of Texas
+                                Luminescence.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/bookstack/portainer-installation.html">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Portainer Installation
+                            </h3>
+                            <p>
+                                Installation of Portainer, a Docker container management
+                                software, on a Ubuntu VM with iSCSI connections for persistent
+                                volumes.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/bookstack/agario-clone.html">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Agar.io Clone (Abandoned)
+                            </h3>
+                            <p>My attempt at creating an Agar.io clone.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/bookstack/jellyfin-installation.html">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                Jellyfin Installation
+                            </h3>
+                            <p>
+                                Installation of Jellyfin, a software media system, on a Ubuntu
+                                LXC container with GPU passthrough for hardware transcoding.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <a class="card card-cover h-100 overflow-hidden text-bg-dark rounded-4 shadow"
+                        style="text-decoration: none" href="/writeups/bookstack/nut-installation.html">
+                        <div class="d-flex flex-column h-100 p-5 pb-3 text-white text-shadow-1">
+                            <h3 class="pt-5 mt-5 mb-4 display-6 lh-1 fw-bold">
+                                NUT Installation
+                            </h3>
+                            <p>
+                                Installation of Network UPS Tools, for sharing UPS information
+                                to devices on the same network.
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
