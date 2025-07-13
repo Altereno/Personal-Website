@@ -11,8 +11,8 @@ steps:
   - name: Quartz generate and move
     image: node:24-bookworm-slim
     commands:
-      - mv $CI_WORKSPACE/writeups/quartz/* quartz/content/
-      - cd quartz
+      - mv $CI_WORKSPACE/writeups/quartz/* Personal-Website-Quartz/content/
+      - cd Personal-Website-Quartz
       - npm i
       - npx quartz build
       - mv public/* $CI_WORKSPACE/writeups/quartz/
