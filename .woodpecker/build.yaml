@@ -6,7 +6,7 @@ steps:
   - name: Pull Quartz repo
     image: alpine/git
     commands:
-      - git clone https://gitea.cluster.stevenchen.one/steven/Personal-Website-Quartz.git
+      - git clone -b personal-website https://gitea.cluster.stevenchen.one/steven/Personal-Website-Quartz.git
   
   - name: Quartz generate and move
     image: node:24-bookworm-slim
@@ -48,7 +48,7 @@ steps:
       - git config --global user.name "woodpecker"
       - git config --global user.email "ci@gitea.cluster.stevenchen.one"
 
-      - git clone -b personal-website https://$GITEA_TOKEN:x-oauth-basic@gitea.cluster.stevenchen.one/steven/Personal-Website-GitOps.git
+      - git clone https://$GITEA_TOKEN:x-oauth-basic@gitea.cluster.stevenchen.one/steven/Personal-Website-GitOps.git
       - cd Personal-Website-GitOps/apps/website
 
       - apk update
