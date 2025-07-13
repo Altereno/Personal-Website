@@ -23,7 +23,7 @@ steps:
     environment:
       DOCKER_TLS_CERTDIR: ""
       DOCKER_HOST: tcp://127.0.0.1:2375
-      IMAGE: gitea.cluster.stevenchen.one/steven/Personal-Website
+      IMAGE: gitea.cluster.stevenchen.one/steven/personal-website
       REGISTRY_USERNAME:
         from_secret: REGISTRY_USERNAME
       REGISTRY_TOKEN:
@@ -53,7 +53,7 @@ steps:
 
       - apk update
       - apk add yq
-      - yq -i '.spec.template.spec.containers[0].image = "gitea.cluster.stevenchen.one/steven/Personal-Website:${CI_COMMIT_SHA}"' deployment.yaml
+      - yq -i '.spec.template.spec.containers[0].image = "gitea.cluster.stevenchen.one/steven/personal-website:${CI_COMMIT_SHA}"' deployment.yaml
 
       - git commit -am "chore - update website image to ${CI_COMMIT_SHA}"
       - git push origin main
