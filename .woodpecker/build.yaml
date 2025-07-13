@@ -48,8 +48,8 @@ steps:
       - git config --global user.name "woodpecker"
       - git config --global user.email "ci@gitea.cluster.stevenchen.one"
 
-      - git clone -b personal-website https://$GITEA_TOKEN:x-oauth-basic@gitea.cluster.stevenchen.one/steven/Personal-Website-Quartz.git
-      - cd Personal-Website-Quartz/apps/website
+      - git clone -b personal-website https://$GITEA_TOKEN:x-oauth-basic@gitea.cluster.stevenchen.one/steven/Personal-Website-GitOps.git
+      - cd Personal-Website-GitOps/apps/website
 
       - apk update
       - apk add yq
