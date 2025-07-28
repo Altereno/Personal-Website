@@ -1,0 +1,195 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge \scshape Steven Chen} \\ \vspace{1pt}
+    \small 512-785-4271 $|$ \href{mailto:contact@stevenchen.one}{\underline{contact@stevenchen.one}} $|$ 
+    \href{https://stevenchen.one/}{\underline{stevenchen.one}}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {The University of Texas at Austin}{Austin, TX}
+      {Bachelor of Science in Electrical and Computer Engineering; GPA: 3.9}{Aug 2022 -- May 2026}
+  \resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {DevOps/Cloud Engineering Intern}{May 2025 -- Aug 2025}
+      {IBM}{Austin, TX}
+      \resumeItemListStart
+        \resumeItem{Migrated CI pipeline to deploy a new Rust-based HSM binary, replacing legacy C++ integration.}
+        \resumeItem{Implemented role-checking logic to verify IAM permissions for hardware HSM access during pipeline executions.}
+        \resumeItem{Tested and documented integration of a vendor tool enabling smart card-based authentication for secure HSM access.}
+        \resumeItem{Added grouping functionality to run batch read-only operations across HSMs, simplifying compliance audits.}
+        \resumeItem{Maintained internal Slack bot by fixing interactive UI flows, investigating TLS handshake issues, and designing key rotation.}
+      \resumeItemListEnd
+      
+    \resumeSubheading
+      {DevOps/IT Intern}{Jun 2024 -- May 2025}
+      {ERCOT}{Taylor, TX}
+      \resumeItemListStart
+        \resumeItem{Designed a modular Python automation framework to integrate dependency-based Jira Plans with any API-driven tool.}
+        \resumeItem{Created a proof of concept leveraging Jira and Ansible Tower APIs to automate issue tracking, dependency resolution, and playbook execution.}
+        \resumeItem{Integrated Microsoft Teams for real-time alerts, manual task notifications, and bi-directional Jira ticket updates from chat.}
+        \resumeItem{Developed a custom CytoscapeJS visualization plugin for near real-time status tracking of Jira Plans within Splunk dashboards.}
+    \resumeItemListEnd
+
+    \resumeSubheading
+      {Backend Developer}{Jan 2024 -- Dec 2024}
+      {Texas Luminescence}{Austin, TX}
+      \resumeItemListStart
+        \resumeItem{Collaborated with the backend team to develop a REST API using Flask and MySQL for a journaling web application.}
+        \resumeItem{Wrote Dockerfiles and configured Docker Compose to containerize the app and manage service dependencies.}
+        \resumeItem{Deployed the full application stack on Azure using Docker Compose, configured DNS via Route 53, and secured traffic with Let's Encrypt TLS certificates.}
+        \resumeItem{Authored comprehensive documentation to help onboard new developers in the organization.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Homelab}}{Aug 2018 -- Present}
+          \resumeItemListStart
+            \resumeItem{Configured and maintained a homelab environment running Git, Jellyfin, Bitwarden, Nextcloud, game servers, and a personal website.}
+            \resumeItem{Used Proxmox as the hypervisor to manage virtual machines and TrueNAS for centralized storage via iSCSI, NFS, and SMB.}
+            \resumeItem{Configured pfSense to segment the network using VLANs and firewall rules, isolating services and enforcing access control.}
+            \resumeItem{Automated VM provisioning and system configuration using Ansible to reduce manual setup.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Personal Website Upgrade}}{Aug 2025 -- Present}
+          \resumeItemListStart
+            \resumeItem{Provisioned Talos Linux nodes on Proxmox using a Terraform provider and applied machine configurations to bootstrap a Kubernetes cluster.}
+            \resumeItem{Deployed a production-ready cluster with Cilium CNI, Longhorn for distributed storage, and Gateway API with cert-manager for secure service exposure.}
+            \resumeItem{Set up Woodpecker CI to build the website from Markdown content and containerize the output.}
+            \resumeItem{Used Argo CD with GitOps workflows to continuously deploy website updates from Gitea repositories.}
+          \resumeItemListEnd
+
+    \resumeSubHeadingListEnd
+
+
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+        \small{\item{CCNA, C/C++, Python, Git, Splunk, Virtualization, Cloud-Init, Linux, Bash, Docker, Terraform, Ansible, Talos, Kubernetes, Cilium, Longhorn, NGINX, Woodpecker CI, Argo CD}}
+ \end{itemize}
+
+
+%-------------------------------------------
+\end{document}
